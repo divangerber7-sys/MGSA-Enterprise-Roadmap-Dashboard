@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>MedRetail Enterprise Roadmap Dashboard (Fictional) — Independent Portfolio Exercise</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#1B3A5C;--blue:#2E75B6;--purple:#5C3A7A;--teal:#0D6E6E;
+  --text:#1A1A1A;--text2:#595959;--border:#CCCCCC;
+  --bg:#F8F9FA;--bg2:#F2F2F2;
+  --rf:#F4CCCC;--rt:#A61C00;
+  --of:#FCE4D6;--ot:#C55A11;
+  --af:#FFF3CD;--at:#9C6500;
+  --gf:#D9EAD3;--gt:#1E6B3C;
+  --bf:#D6E4F0;--bt:#1B3A5C;
+  --pf:#EDE4F5;--pt:#5C3A7A;
+}
+body{font-family:Arial,Helvetica,sans-serif;font-size:14px;color:var(--text);background:#fff}
+.pg-hdr{background:var(--navy);display:flex;flex-direction:column}
+.hdr-top{display:flex;justify-content:space-between;align-items:center;padding:14px 24px 0}
+.hdr-org{font-size:11px;font-weight:700;color:rgba(255,255,255,.65);letter-spacing:.1em;text-transform:uppercase}
+.hdr-ref{font-size:11px;color:rgba(255,255,255,.4);letter-spacing:.04em}
+.hdr-main{padding:12px 24px 0}
+.hdr-title{font-size:26px;font-weight:700;color:#fff;letter-spacing:-.3px}
+.hdr-sub{font-size:13px;color:rgba(255,255,255,.65);margin-top:4px}
+.tab-radios{display:none}
+.tab-bar{display:flex;padding:0 24px;gap:0;overflow-x:auto;margin-top:12px}
+.tab{padding:12px 20px;font-size:13px;font-weight:700;cursor:pointer;color:rgba(255,255,255,.5);border-bottom:3px solid transparent;white-space:nowrap;font-family:Arial,Helvetica,sans-serif;transition:color .15s,border-color .15s;user-select:none}
+.tab:hover{color:rgba(255,255,255,.85)}
+.panel{display:none;padding:24px}
+#t1:checked ~ .pg-hdr .tab[for="t1"],
+#t2:checked ~ .pg-hdr .tab[for="t2"],
+#t3:checked ~ .pg-hdr .tab[for="t3"],
+#t4:checked ~ .pg-hdr .tab[for="t4"],
+#t5:checked ~ .pg-hdr .tab[for="t5"],
+#t6:checked ~ .pg-hdr .tab[for="t6"],
+#t7:checked ~ .pg-hdr .tab[for="t7"]
+{color:#fff;border-bottom-color:rgba(255,255,255,.9)}
+#t1:checked ~ #p1,
+#t2:checked ~ #p2,
+#t3:checked ~ #p3,
+#t4:checked ~ #p4,
+#t5:checked ~ #p5,
+#t6:checked ~ #p6,
+#t7:checked ~ #p7
+{display:block}
+.mrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:20px}
+.mc{background:var(--bg);border:.5px solid var(--border);border-radius:6px;padding:14px 16px}
+.ml{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text2);margin-bottom:4px}
+.mv{font-size:24px;font-weight:700}
+.ms{font-size:11px;color:var(--text2);margin-top:3px}
+.st{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--navy);margin-bottom:10px}
+.badge{display:inline-block;font-size:11px;font-weight:700;padding:3px 9px;border-radius:3px;white-space:nowrap}
+.bc{background:var(--rf);color:var(--rt)}
+.bh{background:var(--of);color:var(--ot)}
+.bm{background:var(--af);color:var(--at)}
+.bg{background:var(--gf);color:var(--gt)}
+.bp{background:var(--bf);color:var(--bt)}
+.bpu{background:var(--pf);color:var(--pt)}
+.tw{overflow-x:auto;border:.5px solid var(--border);border-radius:6px;margin-bottom:16px}
+.tw.sh{max-height:460px;overflow-y:auto}
+.dt{width:100%;border-collapse:collapse;font-size:12px}
+.dt th{background:var(--navy);color:#fff;padding:9px 10px;font-weight:700;font-size:11px;text-align:left;position:sticky;top:0;z-index:2;white-space:nowrap;letter-spacing:.05em;text-transform:uppercase}
+.dt td{padding:8px 10px;border-bottom:.5px solid var(--border);vertical-align:top}
+.dt tr:last-child td{border-bottom:none}
+.dt tr:hover td{background:var(--bg2)}
+.dt td.ctr{text-align:center;vertical-align:middle}
+.dt td.num{text-align:right;font-variant-numeric:tabular-nums;vertical-align:middle}
+.dt td.mid{vertical-align:middle}
+.cg{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.cg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:16px}
+.cb{background:var(--bg);border:.5px solid var(--border);border-radius:6px;padding:14px;margin-bottom:16px}
+.cb0{background:var(--bg);border:.5px solid var(--border);border-radius:6px;padding:14px;margin-bottom:0}
+.card{background:#fff;border:.5px solid var(--border);border-left:4px solid;border-radius:6px;padding:12px 14px;margin-bottom:10px}
+.card:last-child{margin-bottom:0}
+.card-hdr{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:6px}
+.card-title{font-size:13px;font-weight:700;flex:1}
+.card-sub{font-size:12px;color:var(--text2);line-height:1.55}
+.cbar-wrap{margin-bottom:9px}
+.cbar-wrap:last-child{margin-bottom:0}
+.cbar-label{display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px}
+.cbar{height:12px;background:var(--bg2);border-radius:3px;overflow:hidden}
+.cbar-fill{height:100%;border-radius:3px}
+.stat-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:.5px solid var(--border);font-size:12px}
+.stat-row:last-child{border-bottom:none}
+.stat-label{color:var(--text2);flex:1;padding-right:8px}
+.stat-val{font-weight:700;text-align:right;flex-shrink:0}
+.notice{border:.5px solid;border-radius:6px;padding:11px 13px;margin-bottom:10px;font-size:12px;line-height:1.6}
+.notice:last-child{margin-bottom:0}
+.notice-r{background:var(--rf);border-color:#E24B4A;color:var(--rt)}
+.notice-a{background:var(--of);border-color:#EF9F27;color:var(--ot)}
+.notice-g{background:var(--gf);border-color:#4CAF50;color:var(--gt)}
+.notice-b{background:var(--bf);border-color:var(--blue);color:var(--bt)}
+.notice-p{background:var(--pf);border-color:var(--purple);color:var(--pt)}
+.rag{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;vertical-align:middle;flex-shrink:0}
+.rag-r{background:#E24B4A}
+.rag-a{background:#EF9F27}
+.rag-g{background:#4CAF50}
+.rag-b{background:#2E75B6}
+.rag-p{background:#5C3A7A}
+.v-g{color:var(--gt);font-weight:700}
+.v-a{color:var(--at);font-weight:700}
+.v-r{color:var(--rt);font-weight:700}
+.v-b{color:var(--bt);font-weight:700}
+.funnel{display:flex;flex-direction:column;gap:6px}
+.funnel-tier{border-radius:4px;padding:10px 14px;display:flex;align-items:center;justify-content:space-between}
+.funnel-label{font-size:12px;font-weight:700}
+.funnel-count{font-size:20px;font-weight:700}
+.funnel-sub{font-size:11px;opacity:.8}
+.ft-1{background:var(--rf);color:var(--rt)}
+.ft-2{background:var(--of);color:var(--ot)}
+.ft-3{background:var(--af);color:var(--at)}
+.ft-4{background:var(--gf);color:var(--gt)}
+.ft-5{background:var(--bf);color:var(--bt)}
+.act-row{display:flex;gap:10px;padding:9px 0;border-bottom:.5px solid var(--border);font-size:12px;align-items:flex-start}
+.act-row:last-child{border-bottom:none}
+.act-ref{min-width:78px;font-weight:700;flex-shrink:0;color:var(--navy)}
+.act-body{flex:1}
+.act-title{font-weight:700;margin-bottom:2px}
+.act-desc{color:var(--text2);line-height:1.5}
+.act-meta{display:flex;gap:8px;margin-top:4px;flex-wrap:wrap}
+p.intro{font-size:13px;color:var(--text2);margin-bottom:16px;line-height:1.6}
+
+/* ── PORTFOLIO DISCLAIMER ── */
+.portfolio-disclaimer{position:sticky;top:0;z-index:9999;width:100%;background:#7A1F1F;color:#ffffff;font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:1.5;padding:10px 16px;box-sizing:border-box;text-align:center;border-bottom:3px solid #4a1212}
+.portfolio-disclaimer strong{font-weight:700}
+.portfolio-disclaimer a{color:#ffffff;text-decoration:underline;font-weight:700}
+@media (max-width:640px){.portfolio-disclaimer{font-size:12px;padding:10px 12px}}
+.portfolio-about{max-width:1100px;margin:32px auto 40px;padding:20px 24px;border:1px solid var(--border);border-left:4px solid #7A1F1F;background:var(--bg);font-size:13px;line-height:1.6;color:var(--text2);scroll-margin-top:90px}
+.portfolio-about h2{font-size:15px;color:var(--navy);margin-bottom:8px}
+.portfolio-about p+p{margin-top:8px}
+.pd-short{display:none}
+.cg>*,.cg3>*,.mrow>*{min-width:0}
+.dt tr.tot td{font-weight:700;background:var(--bg2);border-top:1px solid var(--border)}
+@media (max-width:900px){.cg3{grid-template-columns:1fr 1fr}}
+@media (max-width:760px){
+  .pd-full{display:none}.pd-short{display:inline}
+  .cg,.cg3{grid-template-columns:1fr}
+  .panel{padding:16px}
+  .hdr-top{flex-wrap:wrap;gap:4px;padding:12px 16px 0}
+  .hdr-main{padding:10px 16px 0}.hdr-title{font-size:21px}
+  .tab-bar{padding:0 8px}.tab{padding:12px 14px}
+  .cb0,.cb,.tw{overflow-x:auto}
+  .dt{min-width:560px}
+  .stat-row{gap:10px}.stat-val{text-align:right}
+  .cbar-label{gap:10px}
+  .act-row{flex-wrap:wrap}
+  .portfolio-about{margin:24px 16px 32px;padding:16px}
+}
+</style>
+</head>
+<body>
+
+<div class="portfolio-disclaimer">
+  &#9888; <strong>Fictional company &amp; data &mdash; independent portfolio exercise by Divan Gerber.</strong>
+  <span class="pd-short">Not a role held or real employer information. All figures simulated.</span>
+  <span class="pd-full">All organizations, programmes, figures, dates and scenarios on this site are simulated for demonstration purposes.
+  Not a role held or real employer information. Every programme, budget, forecast, benefit, milestone, resourcing figure, decision and action shown is invented for this exercise, and the committees, offices and roles shown (including the ExCo Programme Office, Investment Committee and Board ARC) are simulated scenario constructs, not decisions that happened. MSP, PRINCE2 and POPIA are named as real reference points only; no certification or compliance is claimed. This is a static design prototype, not a live programme feed.</span>
+  <a href="#about-this-portfolio">Read more</a>
+</div>
+
+<input class="tab-radios" type="radio" name="tabs" id="t1" checked>
+<input class="tab-radios" type="radio" name="tabs" id="t2">
+<input class="tab-radios" type="radio" name="tabs" id="t3">
+<input class="tab-radios" type="radio" name="tabs" id="t4">
+<input class="tab-radios" type="radio" name="tabs" id="t5">
+<input class="tab-radios" type="radio" name="tabs" id="t6">
+<input class="tab-radios" type="radio" name="tabs" id="t7">
+
+<div class="pg-hdr">
+  <div class="hdr-top">
+    <div class="hdr-org">MedRetail Group South Africa (Fictional)</div>
+    <div class="hdr-ref">Independent Portfolio Exercise &nbsp;|&nbsp; Simulated period: June 2026</div>
+  </div>
+  <div class="hdr-main">
+    <div class="hdr-title">Enterprise Roadmap Dashboard</div>
+    <div class="hdr-sub">8 transformation programmes &bull; R842m total investment &bull; 4 decision gates due Q3 &bull; 61% blended benefits realisation &bull; Simulated snapshot: 22 Jun 2026 (static data, not a live feed)</div>
+  </div>
+  <div class="tab-bar">
+    <label class="tab" for="t1">Roadmap Overview</label>
+    <label class="tab" for="t2">Programme Timeline</label>
+    <label class="tab" for="t3">Investment &amp; Budget</label>
+    <label class="tab" for="t4">Milestones &amp; Dependencies</label>
+    <label class="tab" for="t5">Benefits Realisation</label>
+    <label class="tab" for="t6">Capacity &amp; Resourcing</label>
+    <label class="tab" for="t7">Actions &amp; Decisions</label>
+  </div>
+</div>
+
+<div class="panel" id="p1">
+
+  <div class="notice notice-a">
+    <strong>4 programmes require gate review decisions by end of Q3 2026</strong>, covering R292m of baseline budget (PRG-05, PRG-06, PRG-07, PRG-08) within the R842m portfolio; routine gates for PRG-01 to PRG-04 are not counted here. PRG-05 Clinical IT and PRG-06 AI &amp; Data are both tracking behind their original roadmap milestones and are the two highest-risk items on the enterprise roadmap.
+  </div>
+  <div class="notice notice-b" style="margin-top:10px">
+    <strong>Blended benefits realisation stands at 61%</strong> against the FY2026 target of 75%, driven primarily by delayed store rollout on PRG-01 and slower-than-planned AI use-case activation on PRG-06. 4 of 8 programmes are ahead of or on their benefits schedule.
+  </div>
+
+  <div class="mrow" style="margin-top:16px">
+    <div class="mc"><div class="ml">Active Programmes</div><div class="mv">8</div><div class="ms">Board-tracked</div></div>
+    <div class="mc"><div class="ml">Total Portfolio Investment</div><div class="mv">R842m</div><div class="ms">FY2025&ndash;FY2027</div></div>
+    <div class="mc"><div class="ml">Spend to Date</div><div class="mv v-a">R587m</div><div class="ms">70% of total</div></div>
+    <div class="mc"><div class="ml">Benefits Realised</div><div class="mv v-a">61%</div><div class="ms">Target: 75% FY2026</div></div>
+    <div class="mc"><div class="ml">Gate Reviews Due (Q3)</div><div class="mv v-a">4</div><div class="ms">Before Sep Board</div></div>
+    <div class="mc"><div class="ml">Milestones Overdue</div><div class="mv v-r">9</div><div class="ms">Across portfolio (4 on critical path)</div></div>
+    <div class="mc"><div class="ml">Programmes On Schedule</div><div class="mv v-g">3 / 8</div><div class="ms">Green schedule status</div></div>
+    <div class="mc"><div class="ml">Critical Path Risks</div><div class="mv v-r">3</div><div class="ms">Threatening roadmap dates</div></div>
+  </div>
+
+  <div class="cg">
+    <div>
+      <div class="cb">
+        <div class="st">Roadmap status by programme &mdash; June 2026</div>
+        <div class="stat-row"><span class="stat-label"><span class="rag rag-a"></span><strong>PRG-01 Store Estate Expansion</strong></span><span class="stat-val"><span class="badge bh">Behind schedule</span></span></div>
+        <div class="stat-row"><span class="stat-label"><span class="rag rag-g"></span><strong>PRG-02 Supply Chain Digitisation</strong></span><span class="stat-val"><span class="badge bg">On schedule</span></span></div>
+        <div class="stat-row"><span class="stat-label"><span class="rag rag-g"></span><strong>PRG-03 Loyalty Platform Upgrade</strong></span><span class="stat-val"><span class="badge bg">On schedule</span></span></div>
+        <div class="stat-row"><span class="stat-label"><span class="rag rag-g"></span><strong>PRG-04 Digital Customer Experience</strong></span><span class="stat-val"><span class="badge bg">On schedule</span></span></div>
+        <div class="stat-row"><span class="stat-label"><span class="rag rag-r"></span><strong>PRG-05 Clinical IT Modernisation</strong></span><span class="stat-val"><span class="badge bc">Critical &mdash; replanning</span></span></div>
+        <div class="stat-row"><span class="stat-label"><span class="rag rag-r"></span><strong>PRG-06 AI &amp; Data Capability</strong></span><span class="stat-val"><span class="badge bc">Critical &mdash; benefits gap</span></span></div>
+        <div class="stat-row"><span class="stat-label"><span class="rag rag-a"></span><strong>PRG-07 POPIA &amp; Data Governance</strong></span><span class="stat-val"><span class="badge bh">Behind schedule</span></span></div>
+        <div class="stat-row"><span class="stat-label"><span class="rag rag-b"></span><strong>PRG-08 Infrastructure Refresh</strong></span><span class="stat-val"><span class="badge bp">Paused &mdash; gate required</span></span></div>
+      </div>
+
+      <div class="cb0">
+        <div class="st">Roadmap framework &mdash; simulated design references (no compliance claimed)</div>
+        <div class="stat-row"><span class="stat-label">Programme methodology</span><span class="stat-val">MSP (Managing Successful Programmes)</span></div>
+        <div class="stat-row"><span class="stat-label">Project methodology</span><span class="stat-val">PRINCE2 Agile (tailored)</span></div>
+        <div class="stat-row"><span class="stat-label">Investment governance</span><span class="stat-val">CFO Capital Allocation Policy</span></div>
+        <div class="stat-row"><span class="stat-label">Benefits management</span><span class="stat-val">CFO Benefits Realisation Policy</span></div>
+        <div class="stat-row"><span class="stat-label">Gate review model</span><span class="stat-val">5-gate lifecycle (G0&ndash;G4)</span></div>
+        <div class="stat-row"><span class="stat-label">Roadmap refresh cadence</span><span class="stat-val">Quarterly, ExCo Programme Office</span></div>
+        <div class="stat-row"><span class="stat-label">Last roadmap baseline</span><span class="stat-val">Jan 2026</span></div>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div class="cb">
+        <div class="st">Roadmap risk breakdown &mdash; open by type</div>
+        <div class="funnel">
+          <div class="funnel-tier ft-1">
+            <div><div class="funnel-label">Critical &mdash; threatens roadmap date or gate</div><div class="funnel-sub">PRG-05 replan &bull; PRG-06 benefits gap</div></div>
+            <div class="funnel-count">3</div>
+          </div>
+          <div class="funnel-tier ft-2">
+            <div><div class="funnel-label">High &mdash; milestone slippage</div><div class="funnel-sub">PRG-01 store rollout &bull; PRG-07 regulator findings</div></div>
+            <div class="funnel-count">6</div>
+          </div>
+          <div class="funnel-tier ft-3">
+            <div><div class="funnel-label">Medium &mdash; managed, on watch list</div><div class="funnel-sub">Resourcing &bull; Dependency &bull; Scope</div></div>
+            <div class="funnel-count">11</div>
+          </div>
+          <div class="funnel-tier ft-4">
+            <div><div class="funnel-label">Milestones delivered MTD</div><div class="funnel-sub">Closed in June 2026</div></div>
+            <div class="funnel-count">14</div>
+          </div>
+          <div class="funnel-tier ft-5">
+            <div><div class="funnel-label">Change requests pending roadmap impact assessment</div><div class="funnel-sub">Scope &bull; Budget &bull; Timeline</div></div>
+            <div class="funnel-count">5</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cb0">
+        <div class="st">Roadmap calendar &mdash; H2 2026</div>
+        <div class="stat-row"><span class="stat-label"><span class="rag rag-r"></span><strong>6 Jul</strong> &mdash; ExCo Programme Review (PRG-05 replanning)</span><span><span class="badge bc">Critical</span></span></div>
+        <div class="stat-row"><span class="stat-label"><span class="rag rag-a"></span><strong>16 Jul</strong> &mdash; Portfolio investment committee (Q3 reallocation)</span><span><span class="badge bh">High</span></span></div>
+        <div class="stat-row"><span class="stat-label"><span class="rag rag-a"></span><strong>Aug 2026</strong> &mdash; Gate 3 reviews &mdash; PRG-05, PRG-06, PRG-07</span><span><span class="badge bh">High</span></span></div>
+        <div class="stat-row"><span class="stat-label"><span class="rag rag-a"></span><strong>Sep 2026</strong> &mdash; Board ARC &mdash; portfolio roadmap update</span><span><span class="badge bh">High</span></span></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="panel" id="p2">
+
+  <p class="intro">Roadmap phasing across the 8 transformation programmes, FY2025&ndash;FY2027, showing current lifecycle gate and next scheduled milestone for each.</p>
+
+  <div class="mrow">
+    <div class="mc"><div class="ml">Programmes Live</div><div class="mv v-g">4</div><div class="ms">PRG-01 to PRG-04</div></div>
+    <div class="mc"><div class="ml">Programmes In Delivery</div><div class="mv v-a">3</div><div class="ms">PRG-05, PRG-06, PRG-07</div></div>
+    <div class="mc"><div class="ml">Programmes Paused</div><div class="mv v-r">1</div><div class="ms">PRG-08</div></div>
+    <div class="mc"><div class="ml">Roadmap End Date</div><div class="mv">Q2 2027</div><div class="ms">Full portfolio completion</div></div>
+  </div>
+
+  <div class="cb0">
+    <div class="st">Programme lifecycle position &mdash; current gate</div>
+    <div class="cbar-wrap">
+      <div class="cbar-label"><span>PRG-01 Store Estate Expansion &mdash; Gate 4 (Close)</span><span>92%</span></div>
+      <div class="cbar"><div class="cbar-fill" style="width:92%;background:var(--gt)"></div></div>
+    </div>
+    <div class="cbar-wrap">
+      <div class="cbar-label"><span>PRG-02 Supply Chain Digitisation &mdash; Gate 3 (Benefits)</span><span>78%</span></div>
+      <div class="cbar"><div class="cbar-fill" style="width:78%;background:var(--gt)"></div></div>
+    </div>
+    <div class="cbar-wrap">
+      <div class="cbar-label"><span>PRG-03 Loyalty Platform Upgrade &mdash; Gate 3 (Benefits)</span><span>71%</span></div>
+      <div class="cbar"><div class="cbar-fill" style="width:71%;background:var(--gt)"></div></div>
+    </div>
+    <div class="cbar-wrap">
+      <div class="cbar-label"><span>PRG-04 Digital Customer Experience &mdash; Gate 2 (Delivery)</span><span>64%</span></div>
+      <div class="cbar"><div class="cbar-fill" style="width:64%;background:var(--blue)"></div></div>
+    </div>
+    <div class="cbar-wrap">
+      <div class="cbar-label"><span>PRG-05 Clinical IT Modernisation &mdash; Gate 2 (Delivery, replanning)</span><span>44%</span></div>
+      <div class="cbar"><div class="cbar-fill" style="width:44%;background:var(--rt)"></div></div>
+    </div>
+    <div class="cbar-wrap">
+      <div class="cbar-label"><span>PRG-06 AI &amp; Data Capability &mdash; Gate 2 (Delivery, benefits gap)</span><span>52%</span></div>
+      <div class="cbar"><div class="cbar-fill" style="width:52%;background:var(--ot)"></div></div>
+    </div>
+    <div class="cbar-wrap">
+      <div class="cbar-label"><span>PRG-07 POPIA &amp; Data Governance &mdash; Gate 2 (Delivery)</span><span>58%</span></div>
+      <div class="cbar"><div class="cbar-fill" style="width:58%;background:var(--ot)"></div></div>
+    </div>
+    <div class="cbar-wrap">
+      <div class="cbar-label"><span>PRG-08 Infrastructure Refresh &mdash; Gate 1 (Paused)</span><span>18%</span></div>
+      <div class="cbar"><div class="cbar-fill" style="width:18%;background:var(--blue)"></div></div>
+    </div>
+  </div>
+
+  <div class="cb0">
+    <div class="st">Roadmap timeline &mdash; key phase dates</div>
+    <div class="tw" style="margin-bottom:0">
+      <table class="dt">
+        <thead>
+          <tr><th>Programme</th><th>Start</th><th>Current Gate</th><th>Next Gate Due</th><th>Planned Completion</th><th>Schedule Status</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>PRG-01 Store Estate Expansion</td><td>Jan 2025</td><td>Gate 4 (Close)</td><td>Jul 2026</td><td>Jul 2026</td><td class="ctr"><span class="badge bh">2 months slipped</span></td></tr>
+          <tr><td>PRG-02 Supply Chain Digitisation</td><td>Mar 2025</td><td>Gate 3 (Benefits)</td><td>Sep 2026</td><td>Dec 2026</td><td class="ctr"><span class="badge bg">On schedule</span></td></tr>
+          <tr><td>PRG-03 Loyalty Platform Upgrade</td><td>May 2025</td><td>Gate 3 (Benefits)</td><td>Sep 2026</td><td>Nov 2026</td><td class="ctr"><span class="badge bg">On schedule</span></td></tr>
+          <tr><td>PRG-04 Digital Customer Experience</td><td>Aug 2025</td><td>Gate 2 (Delivery)</td><td>Oct 2026</td><td>Feb 2027</td><td class="ctr"><span class="badge bg">On schedule</span></td></tr>
+          <tr><td>PRG-05 Clinical IT Modernisation</td><td>Sep 2025</td><td>Gate 2 (Delivery)</td><td>Aug 2026</td><td>Apr 2027</td><td class="ctr"><span class="badge bc">4 months slipped</span></td></tr>
+          <tr><td>PRG-06 AI &amp; Data Capability</td><td>Nov 2025</td><td>Gate 2 (Delivery)</td><td>Aug 2026</td><td>Mar 2027</td><td class="ctr"><span class="badge bc">3 months slipped</span></td></tr>
+          <tr><td>PRG-07 POPIA &amp; Data Governance</td><td>Jan 2026</td><td>Gate 2 (Delivery)</td><td>Aug 2026</td><td>Jan 2027</td><td class="ctr"><span class="badge bh">1 month slipped</span></td></tr>
+          <tr><td>PRG-08 Infrastructure Refresh</td><td>Feb 2026</td><td>Gate 1 (Paused)</td><td>Pending capex</td><td>Q2 2027</td><td class="ctr"><span class="badge bp">Paused</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<div class="panel" id="p3">
+
+  <div class="mrow">
+    <div class="mc"><div class="ml">Total Portfolio Investment</div><div class="mv">R842m</div><div class="ms">FY2025&ndash;FY2027</div></div>
+    <div class="mc"><div class="ml">Spend to Date</div><div class="mv v-a">R587m</div><div class="ms">70% of total</div></div>
+    <div class="mc"><div class="ml">Forecast at Completion</div><div class="mv v-a">R856m</div><div class="ms">1.7% above baseline</div></div>
+    <div class="mc"><div class="ml">Programmes Over Budget</div><div class="mv v-r">2</div><div class="ms">PRG-05, PRG-06</div></div>
+    <div class="mc"><div class="ml">Capex Pending Approval</div><div class="mv v-a">R64m</div><div class="ms">PRG-08 DC1 switch</div></div>
+  </div>
+
+  <div class="cg">
+    <div class="cb">
+      <div class="st">Budget consumed vs allocation by programme</div>
+      <div class="cbar-wrap">
+        <div class="cbar-label"><span>PRG-01 Store Estate Expansion &mdash; R210m of R220m</span><span>95%</span></div>
+        <div class="cbar"><div class="cbar-fill" style="width:95%;background:var(--gt)"></div></div>
+      </div>
+      <div class="cbar-wrap">
+        <div class="cbar-label"><span>PRG-02 Supply Chain Digitisation &mdash; R98m of R140m</span><span>70%</span></div>
+        <div class="cbar"><div class="cbar-fill" style="width:70%;background:var(--gt)"></div></div>
+      </div>
+      <div class="cbar-wrap">
+        <div class="cbar-label"><span>PRG-03 Loyalty Platform Upgrade &mdash; R52m of R80m</span><span>65%</span></div>
+        <div class="cbar"><div class="cbar-fill" style="width:65%;background:var(--gt)"></div></div>
+      </div>
+      <div class="cbar-wrap">
+        <div class="cbar-label"><span>PRG-04 Digital Customer Experience &mdash; R61m of R110m</span><span>55%</span></div>
+        <div class="cbar"><div class="cbar-fill" style="width:55%;background:var(--blue)"></div></div>
+      </div>
+      <div class="cbar-wrap">
+        <div class="cbar-label"><span>PRG-05 Clinical IT Modernisation &mdash; R84m of R120m</span><span>70%</span></div>
+        <div class="cbar"><div class="cbar-fill" style="width:70%;background:var(--ot)"></div></div>
+      </div>
+      <div class="cbar-wrap">
+        <div class="cbar-label"><span>PRG-06 AI &amp; Data Capability &mdash; R58m of R92m</span><span>63%</span></div>
+        <div class="cbar"><div class="cbar-fill" style="width:63%;background:var(--ot)"></div></div>
+      </div>
+      <div class="cbar-wrap">
+        <div class="cbar-label"><span>PRG-07 POPIA &amp; Data Governance &mdash; R19m of R38m</span><span>50%</span></div>
+        <div class="cbar"><div class="cbar-fill" style="width:50%;background:var(--blue)"></div></div>
+      </div>
+      <div class="cbar-wrap">
+        <div class="cbar-label"><span>PRG-08 Infrastructure Refresh &mdash; R5m of R42m</span><span>12%</span></div>
+        <div class="cbar"><div class="cbar-fill" style="width:12%;background:var(--at)"></div></div>
+      </div>
+    </div>
+
+    <div class="cb">
+      <div class="st">Budget variance &mdash; flagged programmes</div>
+      <div class="card" style="border-left-color:var(--rt)">
+        <div class="card-hdr"><div class="card-title">PRG-05 Clinical IT Modernisation</div><span class="badge bc">9% over baseline</span></div>
+        <div class="card-sub">Forecast at completion R131m against a R120m baseline, driven by the replanning exercise and additional pharmacist training capacity. Revised forecast to be tabled at the 6 Jul ExCo review.</div>
+      </div>
+      <div class="card" style="border-left-color:var(--ot)">
+        <div class="card-hdr"><div class="card-title">PRG-06 AI &amp; Data Capability</div><span class="badge bh">7% over baseline</span></div>
+        <div class="card-sub">Forecast at completion R98m against a R92m baseline, driven by extended vendor AI due diligence and additional compute costs for parallel legacy/new tooling support.</div>
+      </div>
+      <div class="card" style="border-left-color:var(--at)">
+        <div class="card-hdr"><div class="card-title">PRG-08 Infrastructure Refresh</div><span class="badge bm">Capex pending</span></div>
+        <div class="card-sub">R64m DC1 switch capex motivation in preparation for September Board submission. Programme remains paused pending this approval; no further spend committed until decision.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cb0">
+    <div class="st">Investment detail by programme</div>
+    <div class="tw" style="margin-bottom:0">
+      <table class="dt">
+        <thead>
+          <tr><th>Programme</th><th>Baseline Budget</th><th>Spend to Date</th><th>Forecast at Completion</th><th>Variance</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>PRG-01 Store Estate Expansion</td><td class="num">R220m</td><td class="num">R210m</td><td class="num">R218m</td><td class="num">-1%</td><td class="ctr"><span class="badge bg">Within budget</span></td></tr>
+          <tr><td>PRG-02 Supply Chain Digitisation</td><td class="num">R140m</td><td class="num">R98m</td><td class="num">R138m</td><td class="num">-1%</td><td class="ctr"><span class="badge bg">Within budget</span></td></tr>
+          <tr><td>PRG-03 Loyalty Platform Upgrade</td><td class="num">R80m</td><td class="num">R52m</td><td class="num">R79m</td><td class="num">-1%</td><td class="ctr"><span class="badge bg">Within budget</span></td></tr>
+          <tr><td>PRG-04 Digital Customer Experience</td><td class="num">R110m</td><td class="num">R61m</td><td class="num">R112m</td><td class="num">+2%</td><td class="ctr"><span class="badge bg">Within budget</span></td></tr>
+          <tr><td>PRG-05 Clinical IT Modernisation</td><td class="num">R120m</td><td class="num">R84m</td><td class="num">R131m</td><td class="num">+9%</td><td class="ctr"><span class="badge bc">Over budget</span></td></tr>
+          <tr><td>PRG-06 AI &amp; Data Capability</td><td class="num">R92m</td><td class="num">R58m</td><td class="num">R98m</td><td class="num">+7%</td><td class="ctr"><span class="badge bh">Over budget</span></td></tr>
+          <tr><td>PRG-07 POPIA &amp; Data Governance</td><td class="num">R38m</td><td class="num">R19m</td><td class="num">R38m</td><td class="num">0%</td><td class="ctr"><span class="badge bg">Within budget</span></td></tr>
+          <tr><td>PRG-08 Infrastructure Refresh</td><td class="num">R42m</td><td class="num">R5m</td><td class="num">R42m</td><td class="num">0%</td><td class="ctr"><span class="badge bp">Paused</span></td></tr>
+          <tr class="tot"><td>Portfolio total</td><td class="num">R842m</td><td class="num">R587m</td><td class="num">R856m</td><td class="num">+1.7%</td><td></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<div class="panel" id="p4">
+
+  <div class="notice notice-r">
+    <strong>4 critical-path milestones are overdue and 3 of them are blocking downstream dependencies</strong>: the PRG-01 final store fit-out, PRG-05 dispensing workflow pilot, PRG-06 AI use case activation, and PRG-07 regulator engagement response. The last three each hold up at least one further milestone and are tracked as critical path risks. Overdue as at the simulated 22 Jun 2026 snapshot.
+  </div>
+
+  <div class="mrow" style="margin-top:16px">
+    <div class="mc"><div class="ml">Milestones Tracked</div><div class="mv">11</div><div class="ms">Critical path items</div></div>
+    <div class="mc"><div class="ml">Overdue</div><div class="mv v-r">4</div><div class="ms">3 blocking dependencies</div></div>
+    <div class="mc"><div class="ml">At Risk</div><div class="mv v-a">4</div><div class="ms">Dependent on overdue or paused items</div></div>
+    <div class="mc"><div class="ml">On Track</div><div class="mv v-g">3</div><div class="ms">No blocking dependency</div></div>
+  </div>
+
+  <div class="cb0">
+    <div class="st">Critical path milestones &amp; dependencies</div>
+    <div class="tw" style="margin-bottom:0">
+      <table class="dt">
+        <thead>
+          <tr><th>Milestone Ref</th><th>Programme</th><th>Milestone</th><th>Due</th><th>Status</th><th>Dependency / Blocker</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>M-1101</td><td>PRG-01</td><td>Final 12 stores fit-out complete</td><td class="num">29 May 2026</td><td class="ctr"><span class="badge bc">Overdue</span></td><td>Store fit-out delayed by contractor capacity in KZN</td></tr>
+          <tr><td>M-1204</td><td>PRG-02</td><td>Warehouse management system national rollout</td><td class="num">Sep 2026</td><td class="ctr"><span class="badge bg">On track</span></td><td>&mdash;</td></tr>
+          <tr><td>M-1305</td><td>PRG-03</td><td>Loyalty platform migration &mdash; final customer cohort</td><td class="num">Aug 2026</td><td class="ctr"><span class="badge bg">On track</span></td><td>&mdash;</td></tr>
+          <tr><td>M-1408</td><td>PRG-04</td><td>Tablet POS rollout &mdash; Eastern Cape stores</td><td class="num">Oct 2026</td><td class="ctr"><span class="badge bh">At risk</span></td><td>Depends on PRG-08 connectivity upgrade</td></tr>
+          <tr><td>M-1501</td><td>PRG-05</td><td>Dispensing workflow pilot &mdash; 10 stores</td><td class="num">5 Jun 2026</td><td class="ctr"><span class="badge bc">Overdue</span></td><td>Pilot delayed pending Clinical Governance sign-off</td></tr>
+          <tr><td>M-1502</td><td>PRG-05</td><td>Gate 3 replan submission</td><td class="num">Aug 2026</td><td class="ctr"><span class="badge bh">At risk</span></td><td>Depends on M-1501 pilot outcome</td></tr>
+          <tr><td>M-1601</td><td>PRG-06</td><td>AI use case activation &mdash; demand forecasting</td><td class="num">12 Jun 2026</td><td class="ctr"><span class="badge bc">Overdue</span></td><td>Blocked pending vendor AI due diligence (Action ERD-A02)</td></tr>
+          <tr><td>M-1602</td><td>PRG-06</td><td>Ethics gate review &mdash; second use case tranche</td><td class="num">Aug 2026</td><td class="ctr"><span class="badge bh">At risk</span></td><td>Depends on M-1601 outcome</td></tr>
+          <tr><td>M-1701</td><td>PRG-07</td><td>Regulator engagement &mdash; POPIA findings response</td><td class="num">15 Jun 2026</td><td class="ctr"><span class="badge bc">Overdue</span></td><td>Awaiting legal review sign-off</td></tr>
+          <tr><td>M-1702</td><td>PRG-07</td><td>PAIA Manual update</td><td class="num">Aug 2026</td><td class="ctr"><span class="badge bg">On track</span></td><td>&mdash;</td></tr>
+          <tr><td>M-1801</td><td>PRG-08</td><td>DC1 switch capex Board approval</td><td class="num">Sep 2026</td><td class="ctr"><span class="badge bh">At risk</span></td><td>Depends on capex motivation (Action ERD-A03)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="cb0" style="margin-top:16px">
+    <div class="st">Cross-programme dependency map</div>
+    <div class="stat-row"><span class="stat-label"><strong>PRG-04</strong> tablet POS rollout depends on <strong>PRG-08</strong> connectivity upgrade</span><span class="stat-val"><span class="badge bh">At risk</span></span></div>
+    <div class="stat-row"><span class="stat-label"><strong>PRG-05</strong> Gate 3 replan depends on dispensing workflow pilot outcome</span><span class="stat-val"><span class="badge bh">At risk</span></span></div>
+    <div class="stat-row"><span class="stat-label"><strong>PRG-06</strong> ethics gate review depends on first AI use case activation</span><span class="stat-val"><span class="badge bh">At risk</span></span></div>
+    <div class="stat-row"><span class="stat-label"><strong>PRG-08</strong> DC1 switch approval depends on CFO capex motivation completion</span><span class="stat-val"><span class="badge bh">At risk</span></span></div>
+  </div>
+
+</div>
+
+<div class="panel" id="p5">
+
+  <p class="intro">Benefits realisation tracked against the FY2026 target of 75%, blended across cost savings, revenue growth, and operational efficiency benefit categories for the 8-programme portfolio. Programme percentages are each programme&rsquo;s simulated realisation against its own target; the blended 61% is value-weighted (R756m of R1.24bn) and is not their simple average.</p>
+
+  <div class="mrow">
+    <div class="mc"><div class="ml">Blended Benefits Realisation</div><div class="mv v-a">61%</div><div class="ms">Target: 75% FY2026</div></div>
+    <div class="mc"><div class="ml">Total Benefits Target</div><div class="mv">R1.24bn</div><div class="ms">Cumulative to FY2027</div></div>
+    <div class="mc"><div class="ml">Benefits Realised to Date</div><div class="mv v-a">R756m</div><div class="ms">61% of target</div></div>
+    <div class="mc"><div class="ml">Programmes Ahead / On Track</div><div class="mv v-g">4 / 8</div><div class="ms">Meeting benefits schedule</div></div>
+  </div>
+
+  <div class="cg">
+    <div class="cb">
+      <div class="st">Benefits realisation by programme</div>
+      <div class="cbar-wrap">
+        <div class="cbar-label"><span>PRG-02 Supply Chain Digitisation</span><span>88%</span></div>
+        <div class="cbar"><div class="cbar-fill" style="width:88%;background:var(--gt)"></div></div>
+      </div>
+      <div class="cbar-wrap">
+        <div class="cbar-label"><span>PRG-03 Loyalty Platform Upgrade</span><span>79%</span></div>
+        <div class="cbar"><div class="cbar-fill" style="width:79%;background:var(--gt)"></div></div>
+      </div>
+      <div class="cbar-wrap">
+        <div class="cbar-label"><span>PRG-07 POPIA &amp; Data Governance</span><span>72%</span></div>
+        <div class="cbar"><div class="cbar-fill" style="width:72%;background:var(--blue)"></div></div>
+      </div>
+      <div class="cbar-wrap">
+        <div class="cbar-label"><span>PRG-04 Digital Customer Experience</span><span>68%</span></div>
+        <div class="cbar"><div class="cbar-fill" style="width:68%;background:var(--blue)"></div></div>
+      </div>
+      <div class="cbar-wrap">
+        <div class="cbar-label"><span>PRG-01 Store Estate Expansion</span><span>58%</span></div>
+        <div class="cbar"><div class="cbar-fill" style="width:58%;background:var(--at)"></div></div>
+      </div>
+      <div class="cbar-wrap">
+        <div class="cbar-label"><span>PRG-05 Clinical IT Modernisation</span><span>34%</span></div>
+        <div class="cbar"><div class="cbar-fill" style="width:34%;background:var(--rt)"></div></div>
+      </div>
+      <div class="cbar-wrap">
+        <div class="cbar-label"><span>PRG-06 AI &amp; Data Capability</span><span>29%</span></div>
+        <div class="cbar"><div class="cbar-fill" style="width:29%;background:var(--rt)"></div></div>
+      </div>
+      <div class="cbar-wrap">
+        <div class="cbar-label"><span>PRG-08 Infrastructure Refresh</span><span>6%</span></div>
+        <div class="cbar"><div class="cbar-fill" style="width:6%;background:var(--rt)"></div></div>
+      </div>
+    </div>
+
+    <div class="cb0">
+      <div class="st">Benefits by category</div>
+      <div class="stat-row"><span class="stat-label">Cost savings (procurement, logistics)</span><span class="stat-val">R312m of R420m (74%)</span></div>
+      <div class="stat-row"><span class="stat-label">Revenue growth (loyalty, digital channels)</span><span class="stat-val">R198m of R340m (58%)</span></div>
+      <div class="stat-row"><span class="stat-label">Operational efficiency (store &amp; supply chain)</span><span class="stat-val">R187m of R280m (67%)</span></div>
+      <div class="stat-row"><span class="stat-label">Compliance risk reduction (POPIA, clinical)</span><span class="stat-val">R59m of R200m (30%)</span></div>
+      <div class="stat-row"><span class="stat-label">Benefits owner</span><span class="stat-val">CFO Office, per-programme sponsor</span></div>
+      <div class="stat-row"><span class="stat-label">Realisation review cadence</span><span class="stat-val">Quarterly, CFO Benefits Committee</span></div>
+    </div>
+  </div>
+
+  <div class="cb0">
+    <div class="st">Benefits at risk &mdash; explanation</div>
+    <div class="stat-row"><span class="stat-label"><span class="rag rag-r"></span><strong>PRG-06 AI &amp; Data Capability (29%)</strong> &mdash; benefits blocked by delayed use case activation pending vendor AI due diligence</span><span class="stat-val"><span class="badge bc">Critical</span></span></div>
+    <div class="stat-row"><span class="stat-label"><span class="rag rag-r"></span><strong>PRG-05 Clinical IT Modernisation (34%)</strong> &mdash; benefits contingent on dispensing workflow go-live, currently in replanning</span><span class="stat-val"><span class="badge bc">Critical</span></span></div>
+    <div class="stat-row"><span class="stat-label"><span class="rag rag-a"></span><strong>PRG-01 Store Estate Expansion (58%)</strong> &mdash; final 12 stores delayed, deferring associated revenue benefit</span><span class="stat-val"><span class="badge bh">High</span></span></div>
+    <div class="stat-row"><span class="stat-label"><span class="rag rag-a"></span><strong>PRG-08 Infrastructure Refresh (6%)</strong> &mdash; benefits not yet due; programme paused pending capex approval</span><span class="stat-val"><span class="badge bm">Monitor</span></span></div>
+  </div>
+
+</div>
+
+<div class="panel" id="p6">
+
+  <div class="mrow">
+    <div class="mc"><div class="ml">Programme FTEs Allocated</div><div class="mv">440</div><div class="ms">Across 8 programmes</div></div>
+    <div class="mc"><div class="ml">Vacant / Unfilled Roles</div><div class="mv v-a">66</div><div class="ms">15% of allocated capacity</div></div>
+    <div class="mc"><div class="ml">Contractor Dependency</div><div class="mv v-a">32%</div><div class="ms">Of total programme FTEs</div></div>
+    <div class="mc"><div class="ml">Programmes Reporting Capacity Risk</div><div class="mv v-r">3</div><div class="ms">PRG-05, PRG-06, PRG-08</div></div>
+  </div>
+
+  <div class="cg">
+    <div class="cb">
+      <div class="st">Resourcing fill rate by programme</div>
+      <div class="cbar-wrap">
+        <div class="cbar-label"><span>PRG-01 Store Estate Expansion</span><span>98%</span></div>
+        <div class="cbar"><div class="cbar-fill" style="width:98%;background:var(--gt)"></div></div>
+      </div>
+      <div class="cbar-wrap">
+        <div class="cbar-label"><span>PRG-02 Supply Chain Digitisation</span><span>95%</span></div>
+        <div class="cbar"><div class="cbar-fill" style="width:95%;background:var(--gt)"></div></div>
+      </div>
+      <div class="cbar-wrap">
+        <div class="cbar-label"><span>PRG-03 Loyalty Platform Upgrade</span><span>93%</span></div>
+        <div class="cbar"><div class="cbar-fill" style="width:93%;background:var(--gt)"></div></div>
+      </div>
+      <div class="cbar-wrap">
+        <div class="cbar-label"><span>PRG-04 Digital Customer Experience</span><span>90%</span></div>
+        <div class="cbar"><div class="cbar-fill" style="width:90%;background:var(--gt)"></div></div>
+      </div>
+      <div class="cbar-wrap">
+        <div class="cbar-label"><span>PRG-07 POPIA &amp; Data Governance</span><span>86%</span></div>
+        <div class="cbar"><div class="cbar-fill" style="width:86%;background:var(--blue)"></div></div>
+      </div>
+      <div class="cbar-wrap">
+        <div class="cbar-label"><span>PRG-05 Clinical IT Modernisation</span><span>79%</span></div>
+        <div class="cbar"><div class="cbar-fill" style="width:79%;background:var(--at)"></div></div>
+      </div>
+      <div class="cbar-wrap">
+        <div class="cbar-label"><span>PRG-06 AI &amp; Data Capability</span><span>74%</span></div>
+        <div class="cbar"><div class="cbar-fill" style="width:74%;background:var(--ot)"></div></div>
+      </div>
+      <div class="cbar-wrap">
+        <div class="cbar-label"><span>PRG-08 Infrastructure Refresh</span><span>62%</span></div>
+        <div class="cbar"><div class="cbar-fill" style="width:62%;background:var(--rt)"></div></div>
+      </div>
+    </div>
+
+    <div class="cb">
+      <div class="st">Capacity risks &mdash; detail</div>
+      <div class="card" style="border-left-color:var(--ot)">
+        <div class="card-hdr"><div class="card-title">PRG-06 AI &amp; Data Capability</div><span class="badge bh">High</span></div>
+        <div class="card-sub">74% fill rate. Specialist data engineering and AI governance roles proving hardest to fill; 2 roles have been open since April 2026. Contributing to the use case activation delay.</div>
+      </div>
+      <div class="card" style="border-left-color:var(--at)">
+        <div class="card-hdr"><div class="card-title">PRG-05 Clinical IT Modernisation</div><span class="badge bm">Medium</span></div>
+        <div class="card-sub">79% fill rate. Clinical business analyst capacity constrained; additional secondment from Pharmacy Ops agreed from 8 Jul to support the replanning exercise.</div>
+      </div>
+      <div class="card" style="border-left-color:var(--rt)">
+        <div class="card-hdr"><div class="card-title">PRG-08 Infrastructure Refresh</div><span class="badge bc">Critical</span></div>
+        <div class="card-sub">62% fill rate, the lowest in the portfolio. Recruitment deliberately slowed while programme is paused pending DC1 switch capex approval; will ramp up once funding is confirmed.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cb0">
+    <div class="st">Resourcing detail by programme</div>
+    <div class="tw" style="margin-bottom:0">
+      <table class="dt">
+        <thead>
+          <tr><th>Programme</th><th>FTEs Allocated</th><th>FTEs Filled</th><th>Fill Rate</th><th>Contractor %</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>PRG-01 Store Estate Expansion</td><td class="num">64</td><td class="num">63</td><td class="num">98%</td><td class="num">22%</td><td class="ctr"><span class="badge bg">Healthy</span></td></tr>
+          <tr><td>PRG-02 Supply Chain Digitisation</td><td class="num">58</td><td class="num">55</td><td class="num">95%</td><td class="num">28%</td><td class="ctr"><span class="badge bg">Healthy</span></td></tr>
+          <tr><td>PRG-03 Loyalty Platform Upgrade</td><td class="num">42</td><td class="num">39</td><td class="num">93%</td><td class="num">35%</td><td class="ctr"><span class="badge bg">Healthy</span></td></tr>
+          <tr><td>PRG-04 Digital Customer Experience</td><td class="num">51</td><td class="num">46</td><td class="num">90%</td><td class="num">31%</td><td class="ctr"><span class="badge bg">Healthy</span></td></tr>
+          <tr><td>PRG-05 Clinical IT Modernisation</td><td class="num">76</td><td class="num">60</td><td class="num">79%</td><td class="num">26%</td><td class="ctr"><span class="badge bm">Constrained</span></td></tr>
+          <tr><td>PRG-06 AI &amp; Data Capability</td><td class="num">68</td><td class="num">50</td><td class="num">74%</td><td class="num">44%</td><td class="ctr"><span class="badge bh">Constrained</span></td></tr>
+          <tr><td>PRG-07 POPIA &amp; Data Governance</td><td class="num">44</td><td class="num">38</td><td class="num">86%</td><td class="num">33%</td><td class="ctr"><span class="badge bg">Healthy</span></td></tr>
+          <tr><td>PRG-08 Infrastructure Refresh</td><td class="num">37</td><td class="num">23</td><td class="num">62%</td><td class="num">39%</td><td class="ctr"><span class="badge bc">Critical</span></td></tr>
+          <tr class="tot"><td>Portfolio total</td><td class="num">440</td><td class="num">374</td><td class="num">85%</td><td class="num">32%</td><td></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<div class="panel" id="p7">
+
+  <div class="cb0">
+    <div class="st">Enterprise roadmap actions &amp; decisions register &mdash; June 2026 (critical and high items)</div>
+    <div class="act-row">
+      <div class="act-ref">ERD-A01</div>
+      <div class="act-body">
+        <div class="act-title">Approve PRG-05 Gate 2 replan and revised budget (+9%)</div>
+        <div class="act-desc">ExCo to review and approve the PRG-05 replanning submission, including the revised R131m forecast and updated go-live date, at the 6 Jul Programme Review. Decision gates the dispensing workflow pilot restart.</div>
+        <div class="act-meta"><span class="badge bc">Critical</span><span class="badge bm">Decision due: 6 Jul</span><span>ExCo Programme Office</span></div>
+      </div>
+    </div>
+    <div class="act-row">
+      <div class="act-ref">ERD-A02</div>
+      <div class="act-body">
+        <div class="act-title">Unblock PRG-06 AI use case activation &mdash; vendor due diligence</div>
+        <div class="act-desc">Legal and Data Governance to complete outstanding vendor AI due diligence steps, currently the single blocker to the demand-forecasting use case and the associated benefits realisation.</div>
+        <div class="act-meta"><span class="badge bc">Critical</span><span class="badge bm">Due: 10 Jul</span><span>Legal / Data Governance</span></div>
+      </div>
+    </div>
+    <div class="act-row">
+      <div class="act-ref">ERD-A03</div>
+      <div class="act-body">
+        <div class="act-title">Table PRG-08 DC1 switch capex motivation at Investment Committee</div>
+        <div class="act-desc">CFO Office to finalise and present the R64m DC1 switch capex motivation, unblocking the paused PRG-08 programme and its downstream dependency for PRG-04 connectivity.</div>
+        <div class="act-meta"><span class="badge bh">High</span><span class="badge bm">Present: 16 Jul</span><span>CFO Office</span></div>
+      </div>
+    </div>
+    <div class="act-row">
+      <div class="act-ref">ERD-A04</div>
+      <div class="act-body">
+        <div class="act-title">Recovery plan for PRG-01 final 12-store fit-out</div>
+        <div class="act-desc">PRG-01 lead to submit a recovery plan addressing contractor capacity constraints in KwaZulu-Natal, targeting programme close by the revised Jul 2026 date without further slippage.</div>
+        <div class="act-meta"><span class="badge bh">High</span><span class="badge bm">Due: 8 Jul</span><span>PRG-01 Lead</span></div>
+      </div>
+    </div>
+    <div class="act-row">
+      <div class="act-ref">ERD-A05</div>
+      <div class="act-body">
+        <div class="act-title">Complete PRG-07 regulator engagement response</div>
+        <div class="act-desc">Legal review sign-off required to finalise the response to outstanding POPIA regulator findings, currently blocking the PAIA Manual update milestone.</div>
+        <div class="act-meta"><span class="badge bh">High</span><span class="badge bm">Due: 9 Jul</span><span>Legal / PRG-07 Lead</span></div>
+      </div>
+    </div>
+    <div class="act-row">
+      <div class="act-ref">ERD-A06</div>
+      <div class="act-body">
+        <div class="act-title">Resourcing escalation &mdash; PRG-06 specialist roles</div>
+        <div class="act-desc">Talent Acquisition to escalate the 2 long-open data engineering and AI governance roles, exploring contractor bridging options to reduce delivery risk while permanent recruitment continues.</div>
+        <div class="act-meta"><span class="badge bh">High</span><span class="badge bm">Update: 13 Jul</span><span>Talent Acquisition / PRG-06 Lead</span></div>
+      </div>
+    </div>
+    <div class="act-row">
+      <div class="act-ref">ERD-A07</div>
+      <div class="act-body">
+        <div class="act-title">Q3 portfolio investment reallocation review</div>
+        <div class="act-desc">Investment Committee to assess whether budget headroom from on-track programmes (PRG-01 to PRG-04) can be reallocated to support PRG-05 and PRG-06 recovery, ahead of the September Board ARC. On current simulated forecasts, headroom across PRG-01 to PRG-04 is small (R3m net), so reallocation is unlikely to cover the +R17m forecast overrun on PRG-05 and PRG-06.</div>
+        <div class="act-meta"><span class="badge bh">High</span><span class="badge bm">Review: 16 Jul</span><span>Investment Committee</span></div>
+      </div>
+    </div>
+    <div class="act-row">
+      <div class="act-ref">ERD-A08</div>
+      <div class="act-body">
+        <div class="act-title">Prepare consolidated roadmap update for September Board ARC</div>
+        <div class="act-desc">ExCo Programme Office to compile the full portfolio roadmap update, incorporating outcomes from the Gate 3 reviews (PRG-05, PRG-06, PRG-07) and the PRG-08 capex decision.</div>
+        <div class="act-meta"><span class="badge bm">Medium</span><span class="badge bm">Prep by: 20 Aug</span><span>ExCo Programme Office</span></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<section class="portfolio-about" id="about-this-portfolio">
+  <h2>About This Portfolio</h2>
+  <p><strong>Prepared by:</strong> Divan Gerber &mdash; Independent Portfolio Exercise.</p>
+  <p>This page is part of a self-directed learning project built to demonstrate practical Governance, Risk &amp; Compliance and IT Audit capability. &ldquo;MedRetail Group South Africa&rdquo; and its governance structures are fictional constructs created for this exercise. No real organization, department, employee, board, or confidential data is represented here, and the dashboard is a static design prototype, not a live system. Programme names, budgets, forecasts, benefits, milestones, resourcing figures and the committee decisions and roles shown are simulated scenario content; no real programme results are claimed. MSP, PRINCE2 and POPIA are named only as reference points. This is not a role or office Divan Gerber has held.</p>
+</section>
+
+</body>
+</html>
